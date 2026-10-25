@@ -10,7 +10,7 @@ import streamlit as st
 st.set_page_config(page_title = 'Bookstore Dashboard', layout = 'wide')
 
 def create_store_tab(store_number:int):
-    orders_path, users_path, books_path = (rf'data\STORE{store_number}\orders.parquet', rf'data\STORE{store_number}\users.csv', rf'data\STORE{store_number}\books.yaml')
+    orders_path, users_path, books_path = (rf'data/STORE{store_number}/orders.parquet', rf'data/STORE{store_number}/users.csv', rf'data/STORE{store_number}/books.yaml')
     orders, users, books = extract(orders_path), extract(users_path), extract(books_path)
     orders = transform_orders(orders)
     users = transform_users(users)
