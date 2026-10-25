@@ -5,6 +5,7 @@ from unique_index import create_id_dict
 import pandas as pd
 from agent import create_agent
 from langchain_community.utilities import SQLDatabase
+from groq import RateLimitError
 import streamlit as st
 
 st.set_page_config(page_title = 'Bookstore Dashboard', layout = 'wide')
@@ -49,7 +50,7 @@ def create_store_tab(store_number:int):
                 with st.chat_message("assistant"):
                     answer = agent.invoke({"input": user_input})
                     st.write(answer["output"])
-            except groq.RateLimitError:
+            except RateLimitError:
                 st.warning("Rate limit reached. Please wait a moment before trying again.")
             except Exception as e:
                 st.error(f"An unexpected error occurred: {e}") 
