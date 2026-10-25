@@ -45,9 +45,14 @@ def create_store_tab(store_number:int):
             URI_STRING = f"sqlite:///databases/store{store_number}.db"
             db = SQLDatabase.from_uri(URI_STRING) 
             agent = create_agent(db = db)      
-            with st.chat_message("assistant"):
-                answer = agent.invoke({"input": user_input})
-                st.write(answer["output"])
+            try:
+                with st.chat_message("assistant"):
+                    answer = agent.invoke({"input": user_input})
+                    st.write(answer["output"])
+            except groq.RateLimitError:
+                st.warning("Rate limit reached. Please wait a moment before trying again.")
+            except Exception as e:
+                st.error(f"An unexpected error occurred: {e}") 
     with chart:
         st.subheader("Daily Revenue")
         st.line_chart(daily_price, y_label='Daily Revenue ($)')
