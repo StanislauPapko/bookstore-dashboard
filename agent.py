@@ -7,7 +7,7 @@ import streamlit as st
 
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 MODEL_NAME = "openai/gpt-oss-120b"
-llm = ChatGroq(model = MODEL_NAME, temperature = 0, max_retries = 0, max_iterations=4)
+llm = ChatGroq(model = MODEL_NAME, temperature = 0, max_retries = 0)
 prompt = ChatPromptTemplate.from_messages([
     ("system", '''You are an AI data assistant for a bookstore.
                 You can have normal conversations and answer general questions.
@@ -21,5 +21,5 @@ def create_agent(db, llm = llm, prompt=prompt):
     toolkit = SQLDatabaseToolkit(db=db, llm=llm)
     tools = toolkit.get_tools()
     agent = create_tool_calling_agent(llm, tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False, handle_parsing_errors=True)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False, handle_parsing_errors=True, max_iterations=4)
     return agent_executor
