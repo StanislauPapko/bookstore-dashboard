@@ -76,7 +76,7 @@ def create_store_tab(store_number:int):
                         answer = agent.invoke({"input": user_input, "chat_history":history})
                         st.write(answer["output"])
                         st.session_state[history_key].append({"role": "assistant", "content": answer["output"]})
-                except groq.RateLimitError:
+                except RateLimitError:
                     st.warning("AI API rate limit reached. Please wait a moment before trying again.")
                 except Exception as e:
                     st.error(f"An unexpected error occurred: {e}")
