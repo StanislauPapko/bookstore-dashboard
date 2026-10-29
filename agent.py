@@ -7,7 +7,7 @@ import streamlit as st
 
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 MODEL_NAME = "openai/gpt-oss-120b"
-llm = ChatGroq(model = MODEL_NAME, temperature = 0)
+llm = ChatGroq(model = MODEL_NAME, temperature = 0, max_retries = 0)
 prompt = ChatPromptTemplate.from_messages([
     ("system", '''You are an AI data assistant for a bookstore.
                 You can have normal conversations and answer general questions.
