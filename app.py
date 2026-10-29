@@ -38,17 +38,17 @@ def create_store_tab(store_number:int):
     with metric4:
         st.write("Best Buyer's IDs") 
         st.write(f'{top_spender_ids}')
-    SECOND_RAW_COLUMNS = 2
-    table, chart = st.columns(SECOND_RAW_COLUMNS)
+    SECOND_RAW_DIVISION = [1,3]
+    table, chart = st.columns(SECOND_RAW_DIVISION)
     with table:
         st.subheader("Top 5 Days by Revenue")
         st.write(top_revenue_days)   
     with chart:
-        st.subheader("Daily Revenue")
-        st.line_chart(daily_price, y_label='Daily Revenue ($)')
+        st.subheader("Daily Revenue ($)")
+        st.line_chart(daily_price)
     with st.sidebar:
         st.title("AI Assistant")
-        BOX_HEIGHT = 500
+        BOX_HEIGHT = 450
         messages_box = st.container(height=BOX_HEIGHT)
         history_key = f"chat_history_{store_number}"
         if history_key not in st.session_state:
@@ -83,6 +83,6 @@ def create_store_tab(store_number:int):
 
 NUMBER_OF_STORES = 5
 stores = [f"Store {i}" for i in range(1, NUMBER_OF_STORES + 1)]
-selected_store = st.selectbox("Select a store:", stores)
+selected_store = st.selectbox("Select store:", stores)
 selected_store_number = int(selected_store.split()[-1])
 create_store_tab(selected_store_number)
